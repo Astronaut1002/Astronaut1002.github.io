@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="小巩">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="什么是路由？ 路由怎么实现？  根据不同的url显示不同的页面  声明式：的参数是to(路由的链接)  编程式：this.$router.push (可以使用query传递参数) 路由模式：  hash：window.location.hash (地址栏可见的#键)  history：window.history (发生变化的url会被记录下来，从而浏览器可以使用前进后退) 路由的参数有几种实现方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题归纳">
+<meta property="og:url" content="http://example.com/2023/03/29/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="小巩的博客">
+<meta property="og:description" content="什么是路由？ 路由怎么实现？  根据不同的url显示不同的页面  声明式：的参数是to(路由的链接)  编程式：this.$router.push (可以使用query传递参数) 路由模式：  hash：window.location.hash (地址栏可见的#键)  history：window.history (发生变化的url会被记录下来，从而浏览器可以使用前进后退) 路由的参数有几种实现方">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-29T02:08:35.227Z">
+<meta property="article:modified_time" content="2023-03-29T02:24:05.625Z">
+<meta property="article:author" content="小巩">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>面试题归纳 - 小巩的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小巩的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="面试题归纳"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-29 10:08" pubdate>
+          2023年3月29日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          63 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">面试题归纳</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="什么是路由？-路由怎么实现？"><a href="#什么是路由？-路由怎么实现？" class="headerlink" title="什么是路由？ 路由怎么实现？"></a>什么是路由？ 路由怎么实现？</h1><p>  根据不同的url显示不同的页面<br>  声明式：<router-link>的参数是to(路由的链接)<br>  编程式：this.$router.push (可以使用query传递参数)</p>
+<h1 id="路由模式："><a href="#路由模式：" class="headerlink" title="路由模式："></a>路由模式：</h1><p>  hash：window.location.hash (地址栏可见的#键)<br>  history：window.history (发生变化的url会被记录下来，从而浏览器可以使用前进后退)</p>
+<h1 id="路由的参数有几种实现方式？"><a href="#路由的参数有几种实现方式？" class="headerlink" title="路由的参数有几种实现方式？"></a>路由的参数有几种实现方式？</h1><p>  params：隐式类型：地址栏不可见，刷新容易丢失<br>          显示类型：地址栏可见，刷新不容易丢失<br>  query：类似于git，地址栏可见，刷新不容易丢失</p>
+<h1 id="在js中，数据类型分为几类？它们的数据类型分别那有些？"><a href="#在js中，数据类型分为几类？它们的数据类型分别那有些？" class="headerlink" title="在js中，数据类型分为几类？它们的数据类型分别那有些？"></a>在js中，数据类型分为几类？它们的数据类型分别那有些？</h1><p>  基础数据类型：number，boolean，string，undefined，null<br>  (基础数据类型保存在栈内存中，操作的是值，改变原数据不会影响新变量)<br>  引用数据类型：object，array，function<br>  (引用数据类型保存在堆内存中，操作的是地址，改变其中一个另一个受影响)</p>
+<h1 id="说说你对栈和堆的理解？"><a href="#说说你对栈和堆的理解？" class="headerlink" title="说说你对栈和堆的理解？"></a>说说你对栈和堆的理解？</h1><p>  栈：系统自动分配的，速度快，空间小，<br>  堆：是人为开辟的，速度慢，空间大</p>
+<h1 id="如何使用js给一个按钮绑定多个事件？"><a href="#如何使用js给一个按钮绑定多个事件？" class="headerlink" title="如何使用js给一个按钮绑定多个事件？"></a>如何使用js给一个按钮绑定多个事件？</h1><p>  用事件监听 addEventListener绑定两个事件</p>
+<h1 id="给出一个对象给出它的key和value？"><a href="#给出一个对象给出它的key和value？" class="headerlink" title="给出一个对象给出它的key和value？"></a>给出一个对象给出它的key和value？</h1><p>  key：需要使用object.keys(obj)的方法，返回一个数组，这个数组包含所有obj对象上的key<br>  value：需要使用object.values(obj)的方法，返回一个数组，这个数组包含所有obj对象上的value</p>
+<h1 id="什么是闭包？-优缺点？"><a href="#什么是闭包？-优缺点？" class="headerlink" title="什么是闭包？ 优缺点？"></a>什么是闭包？ 优缺点？</h1><p>  内部函数被保存到外都都会产生闭包<br>  优点：防止污染全局变量<br>  缺点：容易造成内存泄漏<br>  作用：①可以做缓存 ②实现公有变量 ③实现封装私有化 ④防止污染全局变量</p>
+<h1 id="如何解决闭包造成的内存泄漏？"><a href="#如何解决闭包造成的内存泄漏？" class="headerlink" title="如何解决闭包造成的内存泄漏？"></a>如何解决闭包造成的内存泄漏？</h1><p>  将事件处理函数定义在外部，解除闭包</p>
+<h1 id="Dom和Bom是什么？作用有哪些？"><a href="#Dom和Bom是什么？作用有哪些？" class="headerlink" title="Dom和Bom是什么？作用有哪些？"></a>Dom和Bom是什么？作用有哪些？</h1><p>  Dom：文档对象模型 (用于做增删改查)<br>  Bom：浏览器对象模型 (用于浏览器上的事件)</p>
+<h1 id="Dom事件流："><a href="#Dom事件流：" class="headerlink" title="Dom事件流："></a>Dom事件流：</h1><p>  当一个HTML元素上产生一个事件时，该事件会在DOM树中元素节点与根节点之间按特定的顺序传播，<br>  路径所经过的节点都会收到该事件，这个传播过程就是DOM事件流。</p>
+<h1 id="vue中v-if和v-show的共同点和不同点？"><a href="#vue中v-if和v-show的共同点和不同点？" class="headerlink" title="vue中v-if和v-show的共同点和不同点？"></a>vue中v-if和v-show的共同点和不同点？</h1><p>  v-if：控制元素的销毁与渲染 (是通过dom元素来控制的)<br>  v-show：控制元素的显示与隐藏 (通过display：none来实现的)<br>  频繁切换要用v-show</p>
+<h1 id="vue中如何正确使用定时器？"><a href="#vue中如何正确使用定时器？" class="headerlink" title="vue中如何正确使用定时器？"></a>vue中如何正确使用定时器？</h1><p>  要在页面关闭的时候清除定时器<br>  在beforeDestroy()生命周期中清除定时器</p>
+<h1 id="写出html常用的标签-行内元素有哪些？-块级元素有哪些？css盒模型？"><a href="#写出html常用的标签-行内元素有哪些？-块级元素有哪些？css盒模型？" class="headerlink" title="写出html常用的标签 行内元素有哪些？ 块级元素有哪些？css盒模型？"></a>写出html常用的标签 行内元素有哪些？ 块级元素有哪些？css盒模型？</h1><p>  行内元素：span，i，a，img，button<br>  块级元素：div，p，ul，li，form<br>  盒模型：content，padding，border，margin</p>
+<h1 id="标准盒模型和怪异盒模型的区别？"><a href="#标准盒模型和怪异盒模型的区别？" class="headerlink" title="标准盒模型和怪异盒模型的区别？"></a>标准盒模型和怪异盒模型的区别？</h1><p>  宽度和高度的计算方式不同<br>  标准盒模型：<br>    width = content-width<br>    height = content-height<br>  怪异盒模型:<br>    width = content-width + padding-width + border-width<br>    height = content-height + padding-height + border-height</p>
+<h1 id="css3的新特性？"><a href="#css3的新特性？" class="headerlink" title="css3的新特性？"></a>css3的新特性？</h1><p>  阴影：box-shadow<br>  圆角：border-radius<br>  边框图片：border-image<br>  渐变：<br>  动画</p>
+<h1 id="常用的布局方式？"><a href="#常用的布局方式？" class="headerlink" title="常用的布局方式？"></a>常用的布局方式？</h1><p>  浮动布局<br>  定位布局<br>  flex布局</p>
+<h1 id="img标签中的title和alt的区别？"><a href="#img标签中的title和alt的区别？" class="headerlink" title="img标签中的title和alt的区别？"></a>img标签中的title和alt的区别？</h1><p>  title：鼠标划过去显示的内容<br>  alt：图片不能正常加载的时候显示的提示语</p>
+<h1 id="localStorage，sessionStorage，cookie的作用，区别是什么？"><a href="#localStorage，sessionStorage，cookie的作用，区别是什么？" class="headerlink" title="localStorage，sessionStorage，cookie的作用，区别是什么？"></a>localStorage，sessionStorage，cookie的作用，区别是什么？</h1><p>  localStorage：会话周期是永久的，除非主动删除<br>  sessionStorage：生命周期是会话周期，浏览器窗口关闭后就消失了<br>  cookie：单个域名下数量有限，可以跨页面，浏览器生命周期存在<br>  存储大小？<br>    localStorage的大小一般为5M<br>    sessionStorage的大小一般为5M<br>    cookie的大小一般为4K<br>  与服务器端的通信？<br>    localStorage不参与服务器端的通信。<br>    sessionStorage不参与服务器端的通信<br>    cookie参与服务器端通信，每次都会携带http的头信息中</p>
+<h1 id="本地存储的作用？"><a href="#本地存储的作用？" class="headerlink" title="本地存储的作用？"></a>本地存储的作用？</h1><p>  ▪用户的会话信息（如用户登录信息，购物车数据）<br>  ▪用户的个性化设置（如网站设置）<br>  ▪保存临时数据（如一些中间过程的数据）<br>  ▪缓存（如缓存后端接口的数据，可以减少对后端服务器的压力）<br>  ▪记录分析用户行为</p>
+<h1 id="css的引入方法有哪些？link和-import的区别？"><a href="#css的引入方法有哪些？link和-import的区别？" class="headerlink" title="css的引入方法有哪些？link和@import的区别？"></a>css的引入方法有哪些？link和@import的区别？</h1><p>  内嵌<br>  行内<br>  外链<br>  link属于html标签<br>  @import是css提供的</p>
+<h1 id="在响应式页面布局中有哪些需要注意的点？"><a href="#在响应式页面布局中有哪些需要注意的点？" class="headerlink" title="在响应式页面布局中有哪些需要注意的点？"></a>在响应式页面布局中有哪些需要注意的点？</h1><p>  要注意屏幕的尺寸和设备的类型</p>
+<h1 id="vue-js的两个核心是什么？"><a href="#vue-js的两个核心是什么？" class="headerlink" title="vue.js的两个核心是什么？"></a>vue.js的两个核心是什么？</h1><p>  数据驱动和组件系统<br>  1.数据驱动，即是ViewModel，是指视图是由数据驱动生成的，我们对视图的修改，不会直接操作DOM，而是通过修改数据，保证了数据和视图的一致性。<br>  2.组件系统，组件的出现就是为了解决页面布局等等一系列问题，而vue中的组件分为两种，全局组件和局部组件，它提供了强大的页面布局功能。</p>
+<h1 id="vue中一个元素如何绑定多个事件？"><a href="#vue中一个元素如何绑定多个事件？" class="headerlink" title="vue中一个元素如何绑定多个事件？"></a>vue中一个元素如何绑定多个事件？</h1><p>  在元素上使用@click绑定一个add1 add2用逗号隔开 然后在methods添加事件的函数</p>
+<h1 id="Doctype作用？严格模式与混杂模式如何区分？它们有何意义？"><a href="#Doctype作用？严格模式与混杂模式如何区分？它们有何意义？" class="headerlink" title="Doctype作用？严格模式与混杂模式如何区分？它们有何意义？"></a>Doctype作用？严格模式与混杂模式如何区分？它们有何意义？</h1><p>  doctype 是html5标准网页声明，且必须声明在html文档的第一行<br>  严格模式：又称标准模式，是指浏览器按照 W3C 标准解析代码，呈现页面<br>  混杂模式：又称怪异模式或兼容模式，是指浏览器用自己的方式解析代码，即使用一种比较宽松的向后兼容的方式来显示页面</p>
+<h1 id="如何居中div-如何居中一个浮动元素"><a href="#如何居中div-如何居中一个浮动元素" class="headerlink" title="如何居中div 如何居中一个浮动元素"></a>如何居中div 如何居中一个浮动元素</h1><p>  给div设置一个宽度，然后添加 margin:0 auto 属性</p>
+<h1 id="css选择器有哪些-选择器的权重的优先级"><a href="#css选择器有哪些-选择器的权重的优先级" class="headerlink" title="css选择器有哪些 选择器的权重的优先级"></a>css选择器有哪些 选择器的权重的优先级</h1><p>  ld（权重100）&gt; class（权重10）&gt;标签（权重1）</p>
+<h1 id="当页面显示内容超出显示区域是有哪些解决方法"><a href="#当页面显示内容超出显示区域是有哪些解决方法" class="headerlink" title="当页面显示内容超出显示区域是有哪些解决方法?"></a>当页面显示内容超出显示区域是有哪些解决方法?</h1><p>  overflow：hidden</p>
+<h1 id="怎么判断一个变量是不是object"><a href="#怎么判断一个变量是不是object" class="headerlink" title="怎么判断一个变量是不是object"></a>怎么判断一个变量是不是object</h1><p>  object.prototype.toString.call</p>
+<h1 id="js将字符串-“123”-反转"><a href="#js将字符串-“123”-反转" class="headerlink" title="js将字符串 “123” 反转"></a>js将字符串 “123” 反转</h1><p>  用split将字符串切割成数组，再用数组reverse的方法进行反转，再用join将数组转为字符串</p>
+<h1 id="jquery中-起什么作用，可以把-换成其他的吗"><a href="#jquery中-起什么作用，可以把-换成其他的吗" class="headerlink" title="jquery中$起什么作用，可以把$换成其他的吗"></a>jquery中$起什么作用，可以把$换成其他的吗</h1><p>  可以替换</p>
+<h1 id="什么是跨域？"><a href="#什么是跨域？" class="headerlink" title="什么是跨域？"></a>什么是跨域？</h1><p>  浏览器从一个域名的页面去请求另一个域名的资源时，域名，端口，协议任一不同，都算是跨域</p>
+<h1 id="解决跨域的问题？-跨域请求资源的方法有哪些"><a href="#解决跨域的问题？-跨域请求资源的方法有哪些" class="headerlink" title="解决跨域的问题？(# 跨域请求资源的方法有哪些?)"></a>解决跨域的问题？(# 跨域请求资源的方法有哪些?)</h1><p>  ①使用jsonp跨域(只支持get请求，不支持post请求)<br>  ②nginx反向代理</p>
+<h1 id="let-var-const的区别"><a href="#let-var-const的区别" class="headerlink" title="let var const的区别"></a>let var const的区别</h1><p>  let：是块作用域，可以重复复制，没有变量提升<br>  const：是块作用域，只能赋值一次，没有变量提升<br>  var：受代码块影响，有变量提升</p>
+<h1 id="for-in-和-for-of的区别"><a href="#for-in-和-for-of的区别" class="headerlink" title="for in 和 for of的区别"></a>for in 和 for of的区别</h1><p>  for in：遍历对象<br>  for of：不能遍历对象</p>
+<h1 id="undefined和null的区别"><a href="#undefined和null的区别" class="headerlink" title="undefined和null的区别"></a>undefined和null的区别</h1><p>  undefined：未定义，表示现在没有，以后会有，转换为数值为0<br>  null：空，表示现在没有之后也不会有，转换为数值为NaN</p>
+<h1 id="如何判断undefined和null"><a href="#如何判断undefined和null" class="headerlink" title="如何判断undefined和null"></a>如何判断undefined和null</h1><p>  用typeof方法：undefined==undefined  null==object</p>
+<h1 id="说出Array常用的方法，并且说明方法的作用"><a href="#说出Array常用的方法，并且说明方法的作用" class="headerlink" title="说出Array常用的方法，并且说明方法的作用"></a>说出Array常用的方法，并且说明方法的作用</h1><p>  push：尾部添加<br>  unshift：头部添加<br>  shift：头部删除<br>  pop：尾部删除<br>  filter：过滤<br>  reverse：反转<br>  join：将数组转为字符串<br>  concat：拼接<br>  sort：排序</p>
+<h1 id="如何实现深浅拷贝"><a href="#如何实现深浅拷贝" class="headerlink" title="如何实现深浅拷贝"></a>如何实现深浅拷贝</h1><p>  浅拷贝：一个对象拷贝另一个对象的引用地址，更在一个对象另一个对象也会跟着影响<br>  深拷贝：一个对象拷贝另一个对象的引用，更改一个对象另一个对象不受影响</p>
+<h1 id="请介绍Promise？"><a href="#请介绍Promise？" class="headerlink" title="请介绍Promise？"></a>请介绍Promise？</h1><p>  promise是异步操作<br>  三种状态：成功：fullfilled  失败：rejected  进行时pending<br>  .then:用来解决回调地狱<br>  .catch：处理异常错误<br>  .then 有两个参数一个处理成功的函数，一个处理失败的函数</p>
+<p>请介绍Promise的异常捕获？</p>
+<h1 id="async-await使用特点？"><a href="#async-await使用特点？" class="headerlink" title="async / await使用特点？"></a>async / await使用特点？</h1><p>  async用来修饰function<br>  async函数返回promise<br>  await必须写在async函数里，await后面是promise<br>  在async函数中await的作用是把promise变成同步执行的</p>
+<h1 id="src和herf的区别"><a href="#src和herf的区别" class="headerlink" title="src和herf的区别"></a>src和herf的区别</h1><p>  src：用来链接图片地址的<br>  herf：超文本引用，链接url地址</p>
+<h1 id="css如何实现阴影"><a href="#css如何实现阴影" class="headerlink" title="css如何实现阴影"></a>css如何实现阴影</h1><p>  box-shadow：水平阴影，垂直阴影，范围，颜色</p>
+<h1 id="常用的es6新特性有哪些？"><a href="#常用的es6新特性有哪些？" class="headerlink" title="常用的es6新特性有哪些？"></a>常用的es6新特性有哪些？</h1><p>  ①箭头函数<br>  ②模板字符串<br>  ③async/await<br>  ④promise</p>
+<h1 id="提升前端性能的方法-Vue性能优化都有哪些方面？"><a href="#提升前端性能的方法-Vue性能优化都有哪些方面？" class="headerlink" title="提升前端性能的方法(Vue性能优化都有哪些方面？)"></a>提升前端性能的方法(Vue性能优化都有哪些方面？)</h1><p>  ①路由懒加载  ②keep-alive缓存页面  ③使用v-show复用DOM  ④变量本地化</p>
+<h1 id="数组的遍历有几种"><a href="#数组的遍历有几种" class="headerlink" title="数组的遍历有几种"></a>数组的遍历有几种</h1><p>  map<br>  forEach<br>  filter</p>
+<h1 id="typeof的值有哪些"><a href="#typeof的值有哪些" class="headerlink" title="typeof的值有哪些"></a>typeof的值有哪些</h1><p>  number，Boolean，string，undefined，object，function</p>
+<h1 id="列出vue-router的导航守卫"><a href="#列出vue-router的导航守卫" class="headerlink" title="列出vue-router的导航守卫"></a>列出vue-router的导航守卫</h1><p>  全局守卫：前置守卫：router.beforeEach<br>              to：到哪去<br>              from：从哪来<br>           后置钩子：router.afterEach<br>           - 没有next<br>           - 功能：上报日志<br>  局部首位：前置守卫：before.routerEnter (没有this)<br>           更新守卫：before.routerUpdata<br>           离开守卫：before.routerLeave<br>          - 特点：当用户离开的时候，会发起询问，确认用户是否离开<br>          - next传入false则阻止离开</p>
+<h1 id="vue生命周期及其适用场景"><a href="#vue生命周期及其适用场景" class="headerlink" title="vue生命周期及其适用场景"></a>vue生命周期及其适用场景</h1><p>  创建阶段：beforeCreate 创建前  (创建阶段用于做等待动画或骨架屏)<br>           Created 创建完成<br>  挂载阶段：beforeMount 挂载前<br>           Mounted  挂载完成   (挂在阶段用于自发请求数据)<br>  更新阶段：beforeUpdate  更新前  (更新阶段用于二次修改数据和观察数据)<br>           Updated 更新完成<br>  销毁阶段：beforeDestroy  销毁前   (卸载阶段用于清楚常驻内存的数据)<br>           Destroyed 销毁完成</p>
+<h1 id="vue中的组件通信有哪些方式"><a href="#vue中的组件通信有哪些方式" class="headerlink" title="vue中的组件通信有哪些方式"></a>vue中的组件通信有哪些方式</h1><p>  父传子：父组件用v-bind绑定，子组件用props调用<br>  子传父：父组件用v-on传函数，子组件用$emit接收</p>
+<h1 id="vuex的属性"><a href="#vuex的属性" class="headerlink" title="vuex的属性"></a>vuex的属性</h1><p>  state：状态<br>  getters：计算属性<br>  action：执行异步<br>  mutations：用来修改state状态<br>  modules：模块化</p>
+<h1 id="如何消除一个数组里面重复的元素"><a href="#如何消除一个数组里面重复的元素" class="headerlink" title="如何消除一个数组里面重复的元素"></a>如何消除一个数组里面重复的元素</h1><p>  ①使用双重for循环<br>  ②es6中的newSet方法<br>  ③利用sort方法排序 (排序后数组的最后一位和新数组的第一位进行比较)</p>
+<h1 id="split和join的区别"><a href="#split和join的区别" class="headerlink" title="split和join的区别"></a>split和join的区别</h1><p>  split：将字符串切割成数组的形式<br>  join：将数组转换为字符串</p>
+<h1 id="数组-pop，push，unshift，shift，分别的属性是什么"><a href="#数组-pop，push，unshift，shift，分别的属性是什么" class="headerlink" title="数组 pop，push，unshift，shift，分别的属性是什么"></a>数组 pop，push，unshift，shift，分别的属性是什么</h1><p>  push：尾部添加<br>  undshift：头部添加<br>  shift：头部删除<br>  pop：尾部删除</p>
+<h1 id="call，apply和bind的区别"><a href="#call，apply和bind的区别" class="headerlink" title="call，apply和bind的区别"></a>call，apply和bind的区别</h1><p>  他们的传参方式不同<br>  call：是直接调用，是立即执行函数，是传参数(第一个参数是上下文，后续是实例传入的参数)<br>  apply：直接调用，是立即执行函数，是传数组(有两个参数，第一个是上下文，第二个是参数组成的数组)<br>  bind：返回值是一个函数（不会立即执行，需要调用）</p>
+<h1 id="如何阻止事件冒泡和默认事件"><a href="#如何阻止事件冒泡和默认事件" class="headerlink" title="如何阻止事件冒泡和默认事件"></a>如何阻止事件冒泡和默认事件</h1><p>  阻止事件冒泡：stopPropagation  // W3C<br>               cancel Bubble = true<br>  阻止默认事件：return value = false</p>
+<h1 id="清除浮动的方式"><a href="#清除浮动的方式" class="headerlink" title="清除浮动的方式"></a>清除浮动的方式</h1><p>  overflow：hidden<br>  使用伪元素来清除</p>
+<h1 id="判断一个变量是Array还是object"><a href="#判断一个变量是Array还是object" class="headerlink" title="判断一个变量是Array还是object"></a>判断一个变量是Array还是object</h1><p>  ①typeof、②object.prototype.toString、③instancof、④constructor</p>
+<h1 id="创建对象的方式"><a href="#创建对象的方式" class="headerlink" title="创建对象的方式"></a>创建对象的方式</h1><p>  ①字面量创建 ②new操作符object创建对象 ③原型链模式</p>
+<h1 id="vue实现数据双向绑定的原理"><a href="#vue实现数据双向绑定的原理" class="headerlink" title="vue实现数据双向绑定的原理"></a>vue实现数据双向绑定的原理</h1><p>  通过数据劫结合发布订阅模式来实现的</p>
+<h1 id="vue自定义指令"><a href="#vue自定义指令" class="headerlink" title="vue自定义指令"></a>vue自定义指令</h1><p>  v-if：控制元素的销毁与渲染<br>  v-bind：动态绑定属性<br>  v-show：控制元素的显示与隐藏<br>  v-text：渲染文本内容，等价于插值<br>  v-for：for循环<br>  v-once：永远显示数据第一次的值 不受双向响应更新<br>  v-model：数据双向绑定，专门给表单元素绑定的</p>
+<h1 id="vue第一次页面加载会触发那几个钩子"><a href="#vue第一次页面加载会触发那几个钩子" class="headerlink" title="vue第一次页面加载会触发那几个钩子"></a>vue第一次页面加载会触发那几个钩子</h1><p>  创建阶段：beforeCreate 创建前<br>           Created 创建完成<br>  挂载阶段：beforeMount 挂载前<br>           Mounted  挂载完成  </p>
+<h1 id="节流和防抖"><a href="#节流和防抖" class="headerlink" title="节流和防抖"></a>节流和防抖</h1><p>  节流：一个动作在一段时间内只触发了一次<br>  防抖：一段时间内多次触发，只执行了最后一次</p>
+<h1 id="js原型的constructor是什么意思，有什么作用"><a href="#js原型的constructor是什么意思，有什么作用" class="headerlink" title="js原型的constructor是什么意思，有什么作用"></a>js原型的constructor是什么意思，有什么作用</h1><p>  constructor：构造函数</p>
+<p>axios的实现原理</p>
+<h1 id="写出对象和数组的解构赋值？"><a href="#写出对象和数组的解构赋值？" class="headerlink" title="写出对象和数组的解构赋值？"></a>写出对象和数组的解构赋值？</h1><p>  let [a, b, c] = [1, 2, 3];<br>  console.log(a,b,c)<br>  let { a, b } = { a: 123, b:123};<br>  console.log(a,b)</p>
+<h1 id="对象的原型及原型链"><a href="#对象的原型及原型链" class="headerlink" title="对象的原型及原型链"></a>对象的原型及原型链</h1><p>  （原型链用来描述对象之间的关系）<br>  js是面向对象，每个实例对象都有一个__proto__属性，该属性指向它的原型对象。<br>  当对象在查找属性的时候，自身没有就会根据__proto__向它的原型进行查找，<br>  如果都没有，则向它的原型继续查找，直到查到Object.prototype.proto_为null,这样也就形成了原型链。</p>
+<h1 id="keep-alive是什么？"><a href="#keep-alive是什么？" class="headerlink" title="keep-alive是什么？"></a>keep-alive是什么？</h1><p>  是缓存组件<br>  作用：当页面1跳到页面2，后退到页面1的时候，只会加载缓存之前已经渲染好的页面1，而不需要重新加载页面1<br>  作用：可以在组件切换时，保存其包裹的组件的状态，使其不被销毁，防止多次渲染。</p>
+<h1 id="delete和vue-delete删除数组的区别"><a href="#delete和vue-delete删除数组的区别" class="headerlink" title="delete和vue.delete删除数组的区别"></a>delete和vue.delete删除数组的区别</h1><p>  delete：只是被删除的元素变成了undefined，没有改变它的键值对<br>  vue.delete：是删除了整个数组，改变了它的键值对</p>
+<h1 id="如何优化SPA应用的首屏加载速度慢的问题"><a href="#如何优化SPA应用的首屏加载速度慢的问题" class="headerlink" title="如何优化SPA应用的首屏加载速度慢的问题"></a>如何优化SPA应用的首屏加载速度慢的问题</h1><p>  使用ui的按需加载<br>  路由的懒加载</p>
+<h1 id="阐述一个作用域与作用域链"><a href="#阐述一个作用域与作用域链" class="headerlink" title="阐述一个作用域与作用域链"></a>阐述一个作用域与作用域链</h1><p>  全局作用域和局部作用域<br>  作用域链：如果在当前的作用域中没有找到值，向上查找，直到找到全局作用域</p>
+<h1 id="谈谈This对象的理解"><a href="#谈谈This对象的理解" class="headerlink" title="谈谈This对象的理解"></a>谈谈This对象的理解</h1><p>  this就是谁调用指向谁<br>  ①全局作用域this指向window<br>  ②函数预编译this指向window<br>  ③箭头函数的this指向声明时的环境<br>  ④构造函数中的this指向构造函数实例<br>  ⑤call和apply改变this指向</p>
+<h1 id="同步和异步的区别"><a href="#同步和异步的区别" class="headerlink" title="同步和异步的区别"></a>同步和异步的区别</h1><p>  同步：同步一次只能干一件事<br>  异步：一段时间内可以干多件事情</p>
+<h1 id="为什么异步加载js文件-加载方式"><a href="#为什么异步加载js文件-加载方式" class="headerlink" title="为什么异步加载js文件 加载方式"></a>为什么异步加载js文件 加载方式</h1><p>  什么叫异步加载： 异步加载不会阻塞浏览器的后续操作，即在加载执行js的同时，并行加载其他文件渲染页面。<br>  方法：<br>    defer：script标签中增加defer属性，异步加载<br>    async：script标签中增加async属性，异步加载<br>    动态创建DOM</p>
+<h1 id="列举3种强制类型转换和2种隐式类型转换"><a href="#列举3种强制类型转换和2种隐式类型转换" class="headerlink" title="列举3种强制类型转换和2种隐式类型转换"></a>列举3种强制类型转换和2种隐式类型转换</h1><p>  强制类型：number，parseFloat、parseInt<br>  隐式类型：== === </p>
+<p>==和===的不同</p>
+<h1 id="事件委托什么"><a href="#事件委托什么" class="headerlink" title="事件委托什么"></a>事件委托什么</h1><p>  事件冒泡+事件源对象<br>  优点：不需要循环所有元素一个个绑定，有新的数据时也不需要重新绑定</p>
+<h1 id="如何实现本地存储"><a href="#如何实现本地存储" class="headerlink" title="如何实现本地存储"></a>如何实现本地存储</h1><p>  localStorage，sessionStorage，cookie</p>
+<h1 id="eval是做什么的"><a href="#eval是做什么的" class="headerlink" title="eval是做什么的"></a>eval是做什么的</h1><p>  它的功能是把对应的字符串解析成js来运行</p>
+<h1 id="js种立即执行函数有什么用（什么情况下使用）？"><a href="#js种立即执行函数有什么用（什么情况下使用）？" class="headerlink" title="js种立即执行函数有什么用（什么情况下使用）？"></a>js种立即执行函数有什么用（什么情况下使用）？</h1><p>  js立即执行函数是一种语法，可以让函数在定义后被立即执行</p>
+<p>forEach map reduce filter some every的使用方法及区别？<br>  forEach：没有返回值，<br>  map：有返回值<br>  filter：<br>  some：返回的值是布尔值<br>  every：<br>  reduce：递减</p>
+<h1 id="如何中断ajax请求"><a href="#如何中断ajax请求" class="headerlink" title="如何中断ajax请求"></a>如何中断ajax请求</h1><p>  用abort中断ajax请求</p>
+<h1 id="data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？"><a href="#data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？" class="headerlink" title="data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？"></a>data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？</h1><p>  v-text 和 v-html<br>  v-text：等价于插值，只能渲染文本内容<br>  v-html：是专本用于渲染字符串dom片段的</p>
+<p>如何用vuex使axios获取到的数据替换store中的数据？<br>  vuex的值通过辅助函数拿到，把axios获取到的数据给他</p>
+<h1 id="v-for中的key的理解"><a href="#v-for中的key的理解" class="headerlink" title="v-for中的key的理解"></a>v-for中的key的理解</h1><p>  key属性可以用来提升v-for渲染的效率，加上key相当于有了唯一的id值</p>
+<h1 id="哪些操作会造成内存泄漏"><a href="#哪些操作会造成内存泄漏" class="headerlink" title="哪些操作会造成内存泄漏"></a>哪些操作会造成内存泄漏</h1><p>  闭包<br>  没有及时清除定时器</p>
+<h1 id="computed和watch的区别"><a href="#computed和watch的区别" class="headerlink" title="computed和watch的区别"></a>computed和watch的区别</h1><p>  computed是同步执行，对数据类型没有限制，有新的返回值<br>  watch：执行异步操作，没有返回值，对数组和对象要开启深度监听</p>
+<h1 id="怎么使用computed计算属性？"><a href="#怎么使用computed计算属性？" class="headerlink" title="怎么使用computed计算属性？"></a>怎么使用computed计算属性？</h1><p>在生命周期更新的时候</p>
+<h1 id="普通函数与构造函数有什么区别？"><a href="#普通函数与构造函数有什么区别？" class="headerlink" title="普通函数与构造函数有什么区别？"></a>普通函数与构造函数有什么区别？</h1><p>  普通函数：有返回类型，要符合命名规则<br>  构造函数:没有返回类型，构造函数的函数名必须要与类名一致，用于初始化对象</p>
+<h1 id="route和-router的区别"><a href="#route和-router的区别" class="headerlink" title="$route和$router的区别"></a>$route和$router的区别</h1><p>  $route：访问的是当前的路由信息<br>  $router：实现的是路由跳转</p>
+<h1 id="如何中断ajax请求-1"><a href="#如何中断ajax请求-1" class="headerlink" title="如何中断ajax请求"></a>如何中断ajax请求</h1><p>  用abort</p>
+<h1 id="data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？-1"><a href="#data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？-1" class="headerlink" title="data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？"></a>data中定义的变量以文本形式在页面展示，有几种方法实现？分别是什么？区别是什么？</h1><p>  v-text 和 v-html<br>  v-text：等价于插值，只能渲染文本内容<br>  v-html：是专本用于渲染字符串dom片段的</p>
+<p>如何用vuex使axios获取到的数据替换store中的数据？<br>  vuex的值通过辅助函数拿到，把axios获取到的数据给他</p>
+<p>css的选择符有哪些？哪些属性可以继承？优先级算法？内联和!important 那个优先级更高？<br>添加 删除 替换 插入到某个节点的方法？<br>区分px em rem vw vh<br>序列化与反序列化的作用？<br>vue如何做权限控制？<br>如何判断一个对象是否属于某个类？<br>如何判断一个对象是否为空对象？<br>document load和document ready的区别？<br>说一下你对vue和vuex的使用方法？<br>如何添加html事件，有几种方法？<br>网页从输入网址到渲染完成经历了哪些过程？<br>js在浏览器兼容方面有哪些问题？<br>js面向对象中继承实现方式？<br>如何隐藏一个DOM元素<br>vue中如何监控某个属性值的变化<br>vue中给data中的对象属性添加一个新的属性时会发生什么 如何解决<br>html5如何嵌入音频 html5有哪些媒体标签<br>浏览器的内核有哪些<br>position属性的值有哪些？ 怎么使用？<br>列举原生查找DOM的方法？<br>写出一个左右布局占满屏幕 其中左块固定宽度200 右侧自适应？<br>css几种水平垂直居中的方法？<br>css的伪类，伪元素有哪些？<br>document.write和innerHTML的区别？<br>原型方法和实例方法有什么区别？<br>js的本地对象 内置对象和宿主对象之间的区别？<br>统计字符串个数或统计最多字母数？<br>webpack常见的loader<br>js有哪些方法获取元素节点，获取和设置元素属性的方法是什么？</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>面试题归纳</div>
+      <div>http://example.com/2023/03/29/工作室面试题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>小巩</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/29/aboutVue/" title="Vue">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
